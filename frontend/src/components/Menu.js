@@ -5,7 +5,6 @@ const Menu = () => {
   const navigate = useNavigate(); // Hook para manejar redirecciones
 
   const handleLogout = () => {
-    // Aquí puedes limpiar cualquier dato de sesión, como tokens, si usas alguno
     localStorage.removeItem('token'); // Ejemplo de limpieza de token
     navigate('/login'); // Redirige al login
   };

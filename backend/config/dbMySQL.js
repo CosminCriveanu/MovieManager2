@@ -1,12 +1,10 @@
-const mysql = require('mysql2');
+const mysql = require('mysql2/promise');
 
 const pool = mysql.createPool({
-  host: 'localhost',
-  user: 'root', 
-  password: 'root', 
-  database: 'moviemanager', // Nombre de tu base de datos
+    host: 'localhost',
+    user: 'root', 
+    password: 'root',
+    database: 'movie_manager' 
 });
 
-const promisePool = pool.promise(); // Usaremos promesas para consultas asíncronas
-
-module.exports = promisePool;
+module.exports = pool;

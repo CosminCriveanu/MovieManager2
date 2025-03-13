@@ -14,29 +14,31 @@ function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log('Datos enviados:', form); 
     try {
-      const response = await fetch('http://localhost:5001/api/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form),
-      });
+        const response = await fetch('http://localhost:5001/api/auth/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(form),
+        });
 
-      const data = await response.json();
-      if (data.token) {
-        setErrorMessage('');
-        setSuccessMessage('Inicio de sesión exitoso');
-        localStorage.setItem('token', data.token); // Guardar token para autenticación
-        navigate('/movies'); // Redirigir a la página de películas
-      } else {
-        setSuccessMessage('');
-        setErrorMessage(data);
-      }
+        const data = await response.json();
+        if (response.ok) {
+            setErrorMessage('');
+            setSuccessMessage('Inicio de sesión exitoso');
+            localStorage.setItem('token', data.token);
+            navigate('/movies');
+        } else {
+            setSuccessMessage('');
+            setErrorMessage(data.error || 'Error desconocido');
+        }
     } catch (error) {
-      setSuccessMessage('');
-      setErrorMessage('Error al conectar con el servidor');
-      console.error('Error en el inicio de sesión:', error);
+        setSuccessMessage('');
+        setErrorMessage('Error al conectar con el servidor');
+        console.error('Error en el inicio de sesión:', error);
     }
-  };
+};
+
 
   return (
     <form onSubmit={handleSubmit}>
